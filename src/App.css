@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+#canvas {
+  background: #134951;
+  height: 500px;
+  width: 800px;
+}
