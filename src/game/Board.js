@@ -7,10 +7,12 @@ import Paddle from './Paddle'
 import Bricks from './Brick'
 import BrickCollision from './util/BrickColision'
 import PaddleHit from './util/PaddleHit'
+import PlayerStats from './playerStats'
+import LevelCheck from './util/LevelCheck'
 
 let bricks = []
 
-let {ballObj, paddleProps, brickObj} = data
+let {ballObj, paddleProps, brickObj, player} = data
 
 export default function Board() {
   const canvasRef = useRef(null)
@@ -27,16 +29,21 @@ export default function Board() {
       if (newBricketSet && newBricketSet.length > 0) {
         bricks = newBricketSet
       }
+
       
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
+      PlayerStats(ctx, player, canvas)
+      
       bricks.map((brick) => {
         return brick.draw(ctx)
       })
 
       BallMovement(ctx, ballObj)
 
-      WallCollision(canvas, ballObj)
+      LevelCheck(bricks, player, canvas, ballObj)
+
+      WallCollision(canvas, ballObj, player, paddleProps)
 
       let brickCollision;
 
@@ -51,6 +58,7 @@ export default function Board() {
             ballObj.dy = -ballObj.dy
             bricks[i].broke = true
           }
+          player.score += 10
         }
       }
 

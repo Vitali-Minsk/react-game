@@ -1,5 +1,13 @@
-export default function WallCollision (canvas, ballObj) {
-  if(ballObj.y - ballObj.rad <= 0 || ballObj.y + ballObj.rad >= canvas.height) {
+export default function WallCollision (canvas, ballObj, player, paddleProps) {
+  if (ballObj.y + ballObj.rad > canvas.height) {
+    player.lives--;
+    ballObj.x = paddleProps.x;
+    ballObj.y = paddleProps.y - 30;
+    ballObj.dx = 6 * (Math.random() * 2 - 1);
+    ballObj.dy = -6;
+  }
+  
+  if(ballObj.y - ballObj.rad <= 0) {
     ballObj.dy = -ballObj.dy 
   }
 
