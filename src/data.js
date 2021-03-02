@@ -17,7 +17,7 @@ const data = {
   },
   player: {
     name: 'Vitali',
-    lives: 5,
+    lives: 3,
     score: 0,
     level: 1
   },

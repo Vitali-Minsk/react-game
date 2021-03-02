@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { render } from 'react-dom'
 import { BallMovement } from './BallMovement'
 import data from '../data'
@@ -9,7 +9,9 @@ import BrickCollision from './util/BrickColision'
 import PaddleHit from './util/PaddleHit'
 import PlayerStats from './playerStats'
 import LevelCheck from './util/LevelCheck'
-import ResetBall from './util/ResetBall'
+import FinishGame from './util/FinishGame'
+import musicSound from '../assets/audio/music.mp3'
+import { playSound, stopSound } from './util/Sounds'
 
 let bricks = []
 
@@ -18,8 +20,14 @@ let {ballObj, paddleProps, brickObj, player} = data
 export default function Board() {
   const canvasRef = useRef(null)
 
+  const music = new Audio(musicSound)
+  
+
   useEffect(() => {
+    console.log('didmount')
+    let requestId
     const render = () => {
+      
       const canvas = canvasRef.current
       const ctx = canvas.getContext('2d')
 
@@ -34,14 +42,7 @@ export default function Board() {
       
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      if (!player.lives) {
-        alert('game over, restart')
-        player.lives = 3
-        player.level = 1
-        player.score = 0
-        bricks.length = 0
-        ResetBall(ballObj, canvas, paddleProps)
-      }
+      FinishGame(player, bricks, ballObj, paddleProps)
 
       PlayerStats(ctx, player, canvas)
       
@@ -76,10 +77,17 @@ export default function Board() {
 
       PaddleHit(ballObj, paddleProps)
       
-      requestAnimationFrame(render)
+      requestId  = requestAnimationFrame(render)
     }
     
     render()
+
+    playSound(music, true)
+
+    return () => {
+      cancelAnimationFrame(requestId)
+      stopSound(music)
+    }
   }, [])
 
   return (
@@ -88,3 +96,15 @@ export default function Board() {
     </canvas>
   )
 }
+
+// function playMusic() {
+//   const audio = new Audio(musicSound)
+//   audio.currentTime = 0
+//   audio.play()
+//   audio.loop = true
+//   setMusic(audio)
+// }
+
+// function stopMusic(sound) {
+
+// }

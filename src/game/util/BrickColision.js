@@ -1,11 +1,8 @@
 import breakSound from '../../assets/audio/break.wav'
+import { playSound, stopSound } from './Sounds'
 
-function playBreakSound() {
-  const crash = new Audio(breakSound)
-  crash.currentTime = 0
-      // ping.volume = clamp(velocity / 20, 0, 1)
-      crash.play()
-}
+const crash = new Audio(breakSound)
+
 
 export default function BrickCollision(circle, rect) {
   let distX = Math.abs(circle.x - rect.x - rect.width / 2)
@@ -23,7 +20,7 @@ export default function BrickCollision(circle, rect) {
   }
 
   if (distX <= rect.width / 2) {
-  playBreakSound()
+    if (!rect.broke) playSound(crash)
 
     return {
       hit: true,
@@ -31,7 +28,7 @@ export default function BrickCollision(circle, rect) {
     }
   }
   if (distY <= rect.height / 2) {
-  playBreakSound()
+    if (!rect.broke) playSound(crash)
 
     return {
       hit: true,
