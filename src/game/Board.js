@@ -9,6 +9,7 @@ import BrickCollision from './util/BrickColision'
 import PaddleHit from './util/PaddleHit'
 import PlayerStats from './playerStats'
 import LevelCheck from './util/LevelCheck'
+import ResetBall from './util/ResetBall'
 
 let bricks = []
 
@@ -24,7 +25,7 @@ export default function Board() {
 
       paddleProps.y = canvas.height - 30
 
-      let newBricketSet = Bricks(2, bricks, canvas, brickObj)
+      let newBricketSet = Bricks(player.level, bricks, canvas, brickObj)
 
       if (newBricketSet && newBricketSet.length > 0) {
         bricks = newBricketSet
@@ -32,6 +33,15 @@ export default function Board() {
 
       
       ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      if (!player.lives) {
+        alert('game over, restart')
+        player.lives = 3
+        player.level = 1
+        player.score = 0
+        bricks.length = 0
+        ResetBall(ballObj, canvas, paddleProps)
+      }
 
       PlayerStats(ctx, player, canvas)
       

@@ -7,11 +7,11 @@ export default function WallCollision (canvas, ballObj, player, paddleProps) {
     ballObj.dy = -6;
   }
   
-  if(ballObj.y - ballObj.rad <= 0) {
-    ballObj.dy = -ballObj.dy 
+  if (ballObj.y - ballObj.rad < 0) {
+    ballObj.dy *= -1;
   }
 
-  if(ballObj.x - ballObj.rad <= 0 || ballObj.x + ballObj.rad >= canvas.width) {
-    ballObj.dx = -ballObj.dx
+  if (ballObj.x + ballObj.rad > canvas.width || ballObj.x - ballObj.rad < 0) {
+    ballObj.dx *= -1;
   }
 }

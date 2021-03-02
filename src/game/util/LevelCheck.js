@@ -1,4 +1,7 @@
+import data from '../../data'
+
 export default function LevelCheck(bricks, player, canvas, ballObj) {
+  let { brickObj, paddleProps } = data;
   let total = 0;
   for (let i = 0; i < bricks.length; i++) {
     if (bricks[i].broke === true) {
@@ -6,8 +9,7 @@ export default function LevelCheck(bricks, player, canvas, ballObj) {
     }
   }
   if (total === bricks.length) {
-    alert('level up')
     player.level++;
-    ballObj.y = canvas.height - 20
+    brickObj.y = 50;
   }
 }

@@ -13,7 +13,7 @@ const data = {
     width: 800 / 10 - 1,
     height: 20,
     density: 2,
-    colors: ['blue', 'lightblue']
+    colors: ['green', 'lightblue']
   },
   player: {
     name: 'Vitali',
