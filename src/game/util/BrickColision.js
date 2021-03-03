@@ -1,10 +1,9 @@
 import breakSound from '../../assets/audio/break.wav'
-import { playSound, stopSound } from './Sounds'
+import { playSound } from './Sounds'
 
 const crash = new Audio(breakSound)
 
-
-export default function BrickCollision(circle, rect) {
+export default function BrickCollision(circle, rect, soundVolume) {
   let distX = Math.abs(circle.x - rect.x - rect.width / 2)
   let distY = Math.abs(circle.y - rect.y - rect.height / 2)
 
@@ -20,7 +19,7 @@ export default function BrickCollision(circle, rect) {
   }
 
   if (distX <= rect.width / 2) {
-    if (!rect.broke) playSound(crash)
+    if (!rect.broke) playSound(crash, false, soundVolume)
 
     return {
       hit: true,
@@ -28,7 +27,7 @@ export default function BrickCollision(circle, rect) {
     }
   }
   if (distY <= rect.height / 2) {
-    if (!rect.broke) playSound(crash)
+    if (!rect.broke) playSound(crash, false, soundVolume)
 
     return {
       hit: true,

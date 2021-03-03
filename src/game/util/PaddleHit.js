@@ -1,13 +1,9 @@
 import pingSound from '../../assets/audio/ping.wav'
+import { playSound } from './Sounds'
 
-function playPingSound() {
   const ping = new Audio(pingSound)
-  ping.currentTime = 0
-      // ping.volume = clamp(velocity / 20, 0, 1)
-      ping.play()
-}
 
-export default function PaddleHit(ballObj, paddleProps) {
+export default function PaddleHit(ballObj, paddleProps, soundVolume) {
   if (
     ballObj.x < paddleProps.x + paddleProps.width &&
     ballObj.x > paddleProps.x &&
@@ -22,6 +18,6 @@ export default function PaddleHit(ballObj, paddleProps) {
 
     ballObj.dx = ballObj.speed * Math.sin(angle);
     ballObj.dy = -ballObj.speed * Math.cos(angle);
-    playPingSound()
+    playSound(ping, false, soundVolume)
   }
 }

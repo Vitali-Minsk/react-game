@@ -1,5 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { render } from 'react-dom'
+import React, { useRef, useEffect } from 'react'
 import { BallMovement } from './BallMovement'
 import data from '../data'
 import WallCollision from './util/WallCollision'
@@ -22,7 +21,7 @@ localStorage.getItem('bricks') ? bricks = JSON.parse(localStorage.getItem('brick
 
 let {ballObj, paddleProps, brickObj, player} = localData
 
-export default function Board() {
+export default function Board({audioVolume: {musicVolume, soundVolume}}) {
   const canvasRef = useRef(null)
 
   const music = new Audio(musicSound)
@@ -63,7 +62,7 @@ export default function Board() {
       let brickCollision;
 
       for (let i = 0; i < bricks.length; i++) {
-        brickCollision = BrickCollision(ballObj, bricks[i])
+        brickCollision = BrickCollision(ballObj, bricks[i], soundVolume)
 
         if (brickCollision.hit && !bricks[i].broke) {
           if (brickCollision.axis === 'X') {
@@ -79,14 +78,15 @@ export default function Board() {
 
       Paddle(ctx, canvas, paddleProps)
 
-      PaddleHit(ballObj, paddleProps)
+      PaddleHit(ballObj, paddleProps, soundVolume)
       
       requestId  = requestAnimationFrame(render)
     }
     
     render()
 
-    playSound(music, true)
+    console.log('musicVolume', musicVolume)
+    playSound(music, true, musicVolume)
     
     return () => {
       cancelAnimationFrame(requestId)

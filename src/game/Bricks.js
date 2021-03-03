@@ -36,16 +36,5 @@ class Brick {
     this.colors = colors
     this.broke = false
   }
-  draw(ctx) {
-    ctx.beginPath()
-    ctx.rect(this.x, this.y, this.width, this.height)
-    ctx.fillStyle = this.broke ? '#134959' : this.colors[1]
-    ctx.strokeStyle = this.broke ? '#134959' : '#134959'
-    ctx.lineWidth = 5
-    ctx.fillStyle = this.broke ? '#134959' : this.colors[1]
-    ctx.shadowBlur = 0
-    ctx.shadowColor = 'blue'
-    ctx.strokeRect(this.x, this.y, this.width, this.height)
-    ctx.fill()
-  }
+
 }
